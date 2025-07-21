@@ -53,4 +53,36 @@ This is a **concise review sheet** for rapid revision. It includes:
 - Edge case watch-outs
 - Short notes on related patterns
 
+---
+
+## 🚀 The 6-Step DSA Problem-Solving Framework
+
+I am using this framework to understand and solve every problem.
+
+1.  **Understand the Problem Clearly**
+    * Parse input/output format, constraints, hidden edge cases.
+    * Ask clarifying questions if the problem is vague.
+
+2.  **Think Through Examples**
+    * Create my own test cases.
+    * Try to solve with pen/paper.
+    * Identify patterns, edge cases, and possible traps.
+
+3.  **Identify Core Concepts**
+    * Match the problem to known DSA/Algo patterns: sliding window, binary search, DP, trees, graphs, etc.
+    * Map it to brute-force + optimized solutions.
+
+4.  **Plan the Brute-Force Solution**
+    * Write or describe it mentally.
+    * Use it to understand the feasibility and spot redundancies.
+
+5.  **Implement and Optimize**
+    * Code the optimal solution.
+    * Use meaningful variable names, consider edge case handling, and analyze time/space complexity.
+
+6.  **Test and Debug Thoroughly**
+    * Walk through multiple test cases.
+    * Use print-debugging or dry runs for errors.
+    * Reflect: what did you learn? Any patterns seen?
+
 ✅ Perfect for a **10-minute review** the night before an interview.
