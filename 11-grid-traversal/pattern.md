@@ -14,6 +14,9 @@ Apply the Grid Traversal pattern when:
 * **Flood Fill:** Start at a given cell and change the color/value of all connected cells that match the original color. Can be done with BFS or DFS.
 * **Rotting Oranges:** Multi-source BFS where all rotten oranges start the BFS simultaneously to find the time for all fresh oranges to rot.
 * **Word Search:** DFS/Backtracking on a grid to find if a word can be formed by adjacent letters.
+* **Border-Based Traversal / Thinking in Reverse:** (e.g., "Surrounded Regions")
+    * Problems where elements on the border have a special property, and this property "propagates" inwards.
+    * Strategy: Instead of directly identifying elements that satisfy a complex condition (e.g., being "surrounded"), identify elements that *violate* the condition (e.g., 'O's connected to border 'O's) and mark them. Then, in a final pass, process the unmarked elements.
 
 ## Key Implementation Insights
 * **Representing the Grid as a Graph:** Understand that each cell `(r, c)` is a node, and its valid neighbors are its edges.
@@ -30,4 +33,8 @@ Apply the Grid Traversal pattern when:
 * **BFS vs. DFS Choice:**
     * **BFS (Queue):** Preferred for shortest path problems (unweighted graphs) and level-by-level exploration.
     * **DFS (Recursion/Stack):** Preferred for path existence, finding all paths, and problems where exploring one branch completely before another is natural. Be mindful of recursion depth limits for large grids.
-* **Modifying the Grid In-Place:** Sometimes, the problem allows you to modify the grid (e.g., change '1' to '0') instead of using a separate `visited` array. This is an $O(1)$ space optimization for the auxiliary `visited` array.
+* **Modifying the Grid In-Place (Visited Optimization):** Sometimes, the problem allows you to modify the grid (e.g., change '1' to '0', or 'O' to 'A') instead of using a separate `visited` array. This is an $O(1)$ auxiliary space optimization for the visited tracking.
+* **Multi-Pass Approach (for Border-Based Problems):** For problems like "Surrounded Regions", a common strategy is:
+    1.  Perform initial traversals (BFS/DFS) from all relevant border cells.
+    2.  Mark these "special" connected cells with a temporary placeholder character.
+    3.  Make a final pass through the entire grid to update cells based on whether they were marked or not.
