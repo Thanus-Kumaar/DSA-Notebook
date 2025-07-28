@@ -10,6 +10,7 @@ Grid traversal problems involve exploring cells in a 2D matrix (grid) to find pa
 * **Flood Fill/Matrix Transformation:** Changing values of connected cells (e.g., "Flood Fill", "Rotting Oranges").
 * **Multi-Source BFS on Grid:** Starting BFS from multiple initial points simultaneously (e.g., "01 Matrix").
 * **Maze Solving:** Finding a path through a maze.
+* **Border-Based Traversal / Thinking in Reverse:** Identifying elements connected to the grid's boundaries as "safe" or special, then processing the rest based on their relation to these border elements (e.g., "Surrounded Regions").
 
 ## 📚 Common Traps
 * **Incorrect Boundary Checks:** Forgetting to check `row >= 0 && row < m && col >= 0 && col < n` for `new_row`, `new_col` before accessing `grid[new_row][new_col]`. This leads to out-of-bounds errors.
@@ -17,10 +18,11 @@ Grid traversal problems involve exploring cells in a 2D matrix (grid) to find pa
 * **Incorrect Direction Array:** Errors in defining `dx`, `dy` for 4-directional or 8-directional movement.
 * **Passing by Value:** Passing the `grid` or `visited` matrix by value to recursive/helper functions, leading to changes not persisting.
 * **Off-by-One Errors:** In loop bounds or grid dimensions (`m` vs `n`).
+* **Misinterpreting Problem Constraints:** Overlooking details like "surrounded by X" implying "not connected to border".
 
 ## 🔁 Time-Space Complexity Tradeoffs
 * **Time Complexity:** **O(M * N)**, where M is the number of rows and N is the number of columns. Each cell is visited and processed at most once.
-* **Space Complexity:** **O(M * N)** for the `visited` matrix and, in the worst case, for the queue (BFS) or recursion stack (DFS) if the grid is entirely connected.
+* **Space Complexity:** **O(M * N)** for the `visited` matrix and, in the worst case, for the queue (BFS) or recursion stack (DFS) if the grid is entirely connected. Can be **O(1) auxiliary space** if the grid is modified in-place to track visited status.
 
 ## 📌 Problem Checklist and Difficulty Tags
 * **Checklist:**
@@ -28,4 +30,5 @@ Grid traversal problems involve exploring cells in a 2D matrix (grid) to find pa
     * Does the problem involve exploring **adjacent cells** (horizontally, vertically, or diagonally)?
     * Does it ask for counting **connected components**, finding **paths**, or **propagating information** across connected cells?
     * Do you need to ensure cells are visited only once?
+    * Does the definition of "surrounded" or "connected" depend on elements being *away from* the border?
 * **Difficulty:** Medium (basic traversal is medium, complex constraints or multi-source can be harder).
