@@ -85,4 +85,14 @@ I am using this framework to understand and solve every problem.
     * Use print-debugging or dry runs for errors.
     * Reflect: what did you learn? Any patterns seen?
 
+## 💡 How to Use This Notebook Effectively for Interviews
+
+* **Active Engagement:** Don't just read. When reviewing a pattern, actively trace examples, think about variations, and try to apply the patterns to new problems.
+* **Verbalize Constantly:** Practice explaining your thought process, assumptions, and decisions out loud, as if in a real interview.
+* **Leverage the Framework:** Use the 6-step framework as your internal checklist for every problem, whether it's a new one or a revision.
+* **Focus on Trade-offs:** Always be ready to discuss the time and space complexity of different approaches and why one is preferred over another.
+* **Embrace Ambiguity:** See vague problems as opportunities to showcase your clarifying and analytical skills.
+
+This notebook is a living document of your growth. Happy coding and mastering the art of the interview!
+
 ✅ Perfect for a **10-minute review** the night before an interview.
