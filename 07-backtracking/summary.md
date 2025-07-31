@@ -15,6 +15,7 @@
 * **Infinite Recursion:** Missing or incorrect base cases that cause the function to call itself indefinitely.
 * **Passing by Value vs. Reference:** Passing mutable data structures (like `std::vector`) by value instead of by reference (`&`) in recursive calls, leading to changes not being propagated or excessive copying.
 * **Off-by-One Errors:** In loop bounds or `start_index` calculations.
+* **Inefficient Pruning:** Not using optimizations like sorting to prune the search space earlier.
 
 ## 🔁 Time-Space Complexity Tradeoffs
 * **Time Complexity:** Generally **exponential** or **factorial**, as it explores a decision tree. The complexity is often proportional to the number of solutions multiplied by the work to build each solution. For `N` items, it can be $O(2^N)$ (for subsets), $O(N!)$ (for permutations), or $O(C(N,K) \cdot K)$ (for combinations).
