@@ -12,7 +12,7 @@ Apply the Backtracking pattern when:
 * **Generating Combinations:** Selecting `k` items from `n` where order doesn't matter. The key is to pass a `start_index` to the recursive call to ensure elements are picked in increasing order, avoiding duplicates.
 * **Generating Permutations:** Arranging `n` items in all possible sequences. Requires tracking which items have already been "used" in the current permutation (e.g., with a boolean `visited` array or a hash set).
 * **Generating Subsets:** Finding all possible subsets (including the empty set) of a given set. Similar to combinations, but the target size `k` is not fixed.
-* **Combination Sum / Subsets Sum:** Finding all combinations of numbers from a given set that sum up to a target value. May involve allowing element reuse or handling duplicates in the input set.
+* **Combination Sum / Subsets Sum:** Finding combinations of numbers from a given set that sum up to a target value. May involve allowing element reuse or handling duplicates in the input set.
 * **Grid/Board Problems (N-Queens, Sudoku Solver, Word Search):** Exploring paths or placements on a grid, often involving `isValid` checks at each step and backtracking when a constraint is violated.
 * **Parentheses Generation:** Generating all valid combinations of parentheses.
 
@@ -29,4 +29,5 @@ Apply the Backtracking pattern when:
 * **Avoiding Duplicates:**
     * For **combinations**, pass a `start_index` to the recursive call, ensuring you only pick numbers strictly greater than or equal to the last picked number.
     * For **permutations** or problems with duplicate elements in the input, use a `visited` array/set or sort the input and handle duplicates carefully.
+* **Pruning with Sorting:** For problems like "Combination Sum", sorting the input array allows you to prune search branches early. If `current_sum + candidates[i] > target` and the array is sorted, you can `break` the loop, as all subsequent candidates will also be too large.
 * **Drawing the Decision Tree:** This is the most powerful tool for understanding and designing backtracking algorithms. Visualize the choices, the recursive calls, and the backtracking steps.
