@@ -9,6 +9,7 @@ This section is for algorithms and patterns that don't fit neatly into a standar
 * **Morris Traversal:** A space-optimized `O(1)` space in-order traversal for binary trees.
 * **Fisher-Yates Shuffle:** An efficient algorithm for shuffling an array randomly.
 * **Reservoir Sampling:** Selecting `k` items from a stream of `N` items with equal probability.
+* **Minimum of Maximum Manhattan Distance:** Finding the minimum of all possible maximum Manhattan distances after removing one point from a set. Solvable in `O(N^2)` by leveraging the property of `(x+y)` and `(x-y)` extremes.
 
 ## 📚 Common Traps
 * **Oversimplification:** Trying to apply a standard pattern when a problem has a unique twist that breaks the pattern's assumptions.
