@@ -15,6 +15,10 @@ Apply an Algorithmic Insight pattern when:
     * **Insight:** A classic DP problem that can be optimized to `O(1)` space. The key is to realize that the maximum subarray sum ending at index `i` is either `nums[i]` itself or `nums[i] + (the maximum subarray sum ending at `i-1`).
     * **Time:** `O(N)`
     * **Space:** `O(1)`
+* **Valid Parenthesis String:**
+    * **Insight:** The key challenge is the wildcard `*`. A standard stack-based solution fails because it can't handle the `*`'s dual role (as `(` or `)`). The optimal solution uses a two-counter approach (`low` and `high`) to track the minimum and maximum possible balance of open parentheses at each point. The final condition is `low == 0` (all parentheses must be closable), and a failure condition is `high < 0` (too many `)`s to balance).
+    * **Time:** `O(N)`
+    * **Space:** `O(1)`
 * **Reservoir Sampling:**
     * **Insight:** To sample `k` items from a stream of `N` items with equal probability without knowing `N` in advance, you store the first `k` items. Then, for every item `i > k`, you replace a random item in your sample with the new item with probability `k/i`.
 * **Counting Set Bits (`Brian Kernighan's Algorithm`):**
@@ -30,5 +34,5 @@ Apply an Algorithmic Insight pattern when:
 * **The "Ah-ha" Moment:** The most difficult part is identifying the core insight. This comes from careful manual tracing of examples, looking for patterns, and trying to avoid redundant work.
 * **Single Pass:** Many of these algorithms can be implemented in a single `O(N)` pass, often by maintaining a few state variables.
 * **Pointer Manipulation:** Often involves clever use of one or two pointers to traverse the data structure and maintain the necessary state without using extra space.
-* **In-Place Modification:** Many of these problems (e.g., "Next Permutation") require you to modify the input array in-place, which is a common constraint.
+* **In-Place Modification:** Many of these problems require you to modify the input array in-place, which is a common constraint.
 * **Proving Correctness:** The correctness of these algorithms is not always obvious. It often requires a deeper understanding of the properties of the problem. In an interview, verbalizing why your insight works is more important than a formal proof.
