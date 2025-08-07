@@ -21,6 +21,10 @@ Apply an Algorithmic Insight pattern when:
     * **Insight:** To count set bits (`1`s) in a number `n`, you can repeatedly perform `n = n & (n - 1)`. This operation turns off the rightmost set bit. You count how many times you do this until `n` is `0`.
 * **Dutch National Flag Problem (Partitioning):**
     * **Insight:** Partitioning an array of 0s, 1s, and 2s can be done in a single pass using three pointers.
+* **Minimum of Maximum Manhattan Distance:**
+    * **Insight:** The maximum Manhattan distance between any two points `(x1, y1)` and `(x2, y2)` is `max(|x1-x2| + |y1-y2|)`, which can be simplified to `max( (max(x+y) - min(x+y)), (max(x-y) - min(x-y)) )`. This means you can find the maximum distance in `O(N)` time. To solve the problem of "minimum of maximum distances after removing one tree," you can brute-force remove each tree (`O(N)`), and for each case, find the new maximum distance in `O(N)`, giving a total time of `O(N^2)`.
+    * **Time:** `O(N^2)`
+    * **Space:** `O(N)`
 
 ## Key Implementation Insights
 * **The "Ah-ha" Moment:** The most difficult part is identifying the core insight. This comes from careful manual tracing of examples, looking for patterns, and trying to avoid redundant work.
