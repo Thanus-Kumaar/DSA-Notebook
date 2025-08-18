@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🧠 DSA Pattern Notebook</title>
+    <style>
+      :root {
+        --bg: #f5f5f5;
+        --fg: #111;
+        --card-bg: #fff;
+        --border: #ddd;
+        --accent: #0056d6;
+      }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        display: flex;
+        height: 100vh;
+        background: var(--bg);
+        color: var(--fg);
+        transition: background 0.3s, color 0.3s;
+        overflow: hidden;
+      }
+      body.dark {
+        --bg: #1e1b29;
+        --fg: #eaeaea;
+        --card-bg: #2a2438;
+        --border: #3b2f4a;
+        --accent: #9d7aff;
+      }
+      #sidebar {
+        width: 250px;
+        min-width: 250px;
+        background: var(--card-bg);
+        color: var(--fg);
+        overflow-y: auto;
+        padding: 10px;
+        border-right: 1px solid var(--border);
+        transition: width 0.3s ease, padding 0.3s ease;
+      }
+
+      #sidebar.collapsed {
+        width: 0;
+        min-width: 0;
+        padding: 0;
+        border: none;
+        overflow: hidden;
+      }
+      #sidebar h2 {
+        font-size: 1.2em;
+        margin-top: 0;
+      }
+      #sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+      #sidebar li {
+        padding: 8px;
+        cursor: pointer;
+        border-radius: 6px;
+        margin-bottom: 4px;
+      }
+      #sidebar li:hover {
+        background: var(--border);
+      }
+      #main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      #controls {
+        padding: 10px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        background: var(--card-bg);
+      }
+      select,
+      button,
+      input {
+        padding: 6px 8px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--fg);
+      }
+      button {
+        cursor: pointer;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        transition: background 0.3s;
+      }
+      button:hover {
+        background: #7a5ce8;
+      }
+      #themeToggle,
+      #sidebarToggle {
+        cursor: pointer;
+        border: none;
+        background: var(--accent);
+        color: #fff;
+        border-radius: 6px;
+        padding: 6px 10px;
+      }
+      #content {
+        flex: 1;
+        display: flex;
+        padding: 10px;
+        gap: 10px;
+        overflow: hidden;
+      }
+      #docs {
+        flex: 1;
+        overflow-y: auto;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      .tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+      .tabs button {
+        flex: 1;
+        padding: 8px;
+        border: none;
+        cursor: pointer;
+        border-radius: 6px;
+        background: var(--border);
+        color: var(--fg);
+      }
+      .tabs button.active {
+        background: var(--accent);
+        color: #fff;
+      }
+      .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      }
+      .card h3 {
+        margin-top: 0;
+      }
+      #editor-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      #editor {
+        flex: 1;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      #output {
+        height: 150px;
+        overflow-y: auto;
+        border: 1px solid var(--border);
+        padding: 10px;
+        margin-top: 8px;
+        background: var(--card-bg);
+        border-radius: 10px;
+        white-space: pre-wrap;
+      }
+    </style>
+    <!-- Markdown renderer -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- CodeMirror -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/dracula.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/clike/clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/javascript/javascript.min.js"></script>
+  </head>
+  <body>
+    <div id="sidebar">
+      <h2>📚 Patterns</h2>
+      <ul id="topics"></ul>
+    </div>
+    <div id="main">
+      <div id="controls">
+        <button id="sidebarToggle">📂</button>
+        <label>Mode:</label>
+        <select id="mode">
+          <option value="practice">Practice Mode</option>
+          <option value="flash">Flash Practice Mode</option>
+          <option value="cross">Cross-links Mode</option>
+          <option value="edge">Edge Case Mode</option>
+        </select>
+        <input type="password" id="apiKey" placeholder="Gemini API Key" />
+        <button onclick="generateAI()">✨ Generate</button>
+        <label>Lang:</label>
+        <select id="language" onchange="setLanguage(this.value)">
+          <option value="cpp">C++</option>
+          <option value="python">Python</option>
+          <option value="java">Java</option>
+        </select>
+        <button id="themeToggle">🌙 Theme</button>
+      </div>
+      <div id="content">
+        <div id="docs">
+          <div class="tabs">
+            <button id="docsTab" class="active">📄 Docs</button>
+            <button id="aiTab">🤖 AI Response</button>
+          </div>
+          <div id="docsView">
+            <div class="card">
+              <h3>Summary</h3>
+              <div id="summary"></div>
+            </div>
+            <div class="card">
+              <h3>Pattern</h3>
+              <div id="pattern"></div>
+            </div>
+          </div>
+          <div id="aiView" style="display: none">
+            <div class="card">
+              <h3>AI Response</h3>
+              <div id="aiOutput">No response yet.</div>
+            </div>
+          </div>
+        </div>
+        <div id="editor-container">
+          <textarea id="editor"></textarea>
+          <div id="output"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // hidden system prompts
+      // hidden system prompts
+      const prompts = {
+        practice: `You are a DSA coding assistant.
+        From the given pattern.md context, generate 3–5 concise code snippets 
+        that directly demonstrate the core algorithms and patterns mentioned.
+        Each snippet should be a self-contained function or main() usage.
+        Do NOT explain — just output clean, runnable code.
+        Keep them minimal, focusing only on the pattern (no extra boilerplate).`,
+
+        flash: `You are a coding drill generator.
+        From the pattern.md context, output multiple short code skeletons 
+        (functions, loops, recursions, etc.) that capture the essence of the pattern.
+        Omit all explanations — the goal is to practice typing.
+        Keep each snippet under ~15 lines.`,
+
+        cross: `You are a DSA mentor.
+        Using the pattern.md context, generate side-by-side code snippets that 
+        compare this pattern with 1–2 related patterns (if mentioned).
+        Highlight the subtle differences in approach by showing both versions 
+        of the code. Do not explain, just output the code snippets.`,
+
+        edge: `You are a problem setter.
+        From the pattern.md context, generate tricky or less obvious code variants 
+        of this pattern (for edge cases or uncommon inputs).
+        Focus on subtle variations that are worth practicing.
+        Output ONLY code snippets (no commentary).`,
+      };
+
+      // Tab toggles
+      const docsTab = document.getElementById("docsTab");
+      const aiTab = document.getElementById("aiTab");
+      const docsView = document.getElementById("docsView");
+      const aiView = document.getElementById("aiView");
+      const aiOutput = document.getElementById("aiOutput");
+
+      docsTab.onclick = () => {
+        docsTab.classList.add("active");
+        aiTab.classList.remove("active");
+        docsView.style.display = "block";
+        aiView.style.display = "none";
+      };
+      aiTab.onclick = () => {
+        aiTab.classList.add("active");
+        docsTab.classList.remove("active");
+        docsView.style.display = "none";
+        aiView.style.display = "block";
+      };
+
+      const folders = [
+        "01-hashing",
+        "02-two-pointers",
+        "03-linked-list",
+        "04-sliding-window",
+        "05-trees",
+        "06-bfs",
+        "07-backtracking",
+        "08-dynamic-programming",
+        "09-binary-search",
+        "10-heaps-priority-queues",
+        "11-grid-traversal",
+        "12-graphs",
+        "13-greedy-algorithms",
+        "14-monotonic-stack",
+        "15-prefix-sum",
+        "16-algorithmic-insights",
+        "17-interval-problems",
+        "18-tries",
+        "19-dsu",
+        "20-bitmasking",
+        "tag",
+        "template",
+      ];
+
+      const topicsEl = document.getElementById("topics");
+      folders.forEach((f) => {
+        const li = document.createElement("li");
+        li.textContent = f;
+        li.onclick = () => loadDocs(f);
+        topicsEl.appendChild(li);
+      });
+
+      let currentFolder = null;
+      async function loadDocs(folder) {
+        currentFolder = folder;
+        const summary = await fetch(`${folder}/summary.md`)
+          .then((r) => r.text())
+          .catch(() => "# Missing summary.md");
+        const pattern = await fetch(`${folder}/pattern.md`)
+          .then((r) => r.text())
+          .catch(() => "# Missing pattern.md");
+        document.getElementById("summary").innerHTML = marked.parse(summary);
+        document.getElementById("pattern").innerHTML = marked.parse(pattern);
+      }
+
+      // CodeMirror setup
+      let cm = CodeMirror.fromTextArea(document.getElementById("editor"), {
+        mode: "text/x-c++src",
+        lineNumbers: true,
+        theme: "default",
+      });
+
+      // Boilerplates
+      const boilerplates = {
+        cpp: `#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    // Your code here
+
+    return 0;
+}`,
+        python: `def main():
+    # Your code here
+    pass
+
+if __name__ == "__main__":
+    main()`,
+        java: `import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        // Your code here
+    }
+}`,
+      };
+
+      function setLanguage(lang) {
+        if (lang === "cpp") cm.setOption("mode", "text/x-c++src");
+        if (lang === "python") cm.setOption("mode", "python");
+        if (lang === "java") cm.setOption("mode", "text/x-java");
+        cm.setValue(boilerplates[lang]);
+      }
+
+      async function generateAI() {
+        if (!currentFolder) return alert("Select a folder first.");
+        const apiKey = document.getElementById("apiKey").value.trim();
+        if (!apiKey) return alert("Enter your Gemini API key.");
+
+        const mode = document.getElementById("mode").value;
+        const summary = await fetch(`${currentFolder}/summary.md`)
+          .then((r) => r.text())
+          .catch(() => "");
+        const pattern = await fetch(`${currentFolder}/pattern.md`)
+          .then((r) => r.text())
+          .catch(() => "");
+        const context = summary + "\n\n" + pattern;
+        const systemPrompt = prompts[mode];
+        const userPrompt = `${systemPrompt}\n\nPattern context:\n${context}`;
+
+        // Show loader + switch to AI tab
+        aiOutput.innerHTML = "<em>⏳ Generating response...</em>";
+        docsTab.classList.remove("active");
+        aiTab.classList.add("active");
+        docsView.style.display = "none";
+        aiView.style.display = "block";
+
+        const resp = await fetch(
+          "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-goog-api-key": apiKey,
+            },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: userPrompt }] }],
+            }),
+          }
+        ).then((r) => r.json());
+
+        const text =
+          resp.candidates?.[0]?.content?.parts?.[0]?.text || "⚠️ No response.";
+        aiOutput.innerHTML = marked.parse(text);
+      }
+
+      // Theme toggle
+      document.getElementById("themeToggle").onclick = () => {
+        document.body.classList.toggle("dark");
+        cm.setOption(
+          "theme",
+          document.body.classList.contains("dark") ? "dracula" : "default"
+        );
+      };
+
+      // Sidebar toggle
+      document.getElementById("sidebarToggle").onclick = () => {
+        document.getElementById("sidebar").classList.toggle("collapsed");
+      };
+    </script>
+  </body>
+</html>
