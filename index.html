@@ -121,6 +121,15 @@
         border-radius: 6px;
         padding: 6px 10px;
       }
+      #selectedFolder {
+        font-weight: bold;
+        font-size: larger;
+        margin: 0 10px;
+        color: var(--accent);
+      }
+      #placeholder {
+        padding: 15px;
+      }
       #content {
         flex: 1;
         display: flex;
@@ -163,7 +172,7 @@
         background: var(--card-bg);
         border: 1px solid var(--border);
         border-radius: 10px;
-        padding: 15px;
+        padding: 0px 15px 0px 15px;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
       }
       .card h3 {
@@ -266,8 +275,12 @@
     </div>
     <div id="main">
       <div id="controls">
-        <div class="control-group">
+        <div id="control-group">
           <button id="sidebarToggle">📂</button>
+          <span id="selectedFolder">No folder selected</span>
+        </div>
+
+        <div class="control-group">
           <label>
             Mode:
             <span id="modeInfo">ⓘ</span>
@@ -308,16 +321,18 @@
               </p>
             </div>
             <div class="card">
-              <h3>Summary</h3>
               <div id="summary">
-                Summary of selected topic will be displayed here!
+                <div style="padding: 15px"
+                  >Summary of selected topic will be displayed here!</div
+                >
               </div>
             </div>
             <div class="card">
-              <h3>Pattern</h3>
               <div id="pattern">
-                Common patterns present in the selected topic will be shown
-                here!
+                <div style="padding: 15px">
+                  Common patterns present in the selected topic will be shown
+                  here!
+                </div>
               </div>
             </div>
           </div>
@@ -433,6 +448,7 @@ Respond in Markdown.`,
 
       let currentFolder = null;
       async function loadDocs(folder) {
+        document.getElementById("selectedFolder").innerText = `${folder}`;
         currentFolder = folder;
         document.getElementById("placeholder").classList.add("hidden");
         document.getElementById("summary").classList.remove("hidden");
