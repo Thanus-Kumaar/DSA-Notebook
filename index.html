@@ -169,6 +169,7 @@
         background: var(--card-bg);
         border-radius: 10px;
         white-space: pre-wrap;
+        word-break: break-word;
       }
       #modeInfo {
         margin-left: 6px;
@@ -210,6 +211,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/clike/clike.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/javascript/javascript.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+      // Enable auto-highlighting on load
+      document.addEventListener("DOMContentLoaded", () => {
+        hljs.highlightAll();
+      });
+    </script>
   </head>
   <body>
     <div id="sidebar">
@@ -272,33 +284,35 @@
     <script>
       // hidden system prompts
       const prompts = {
-        practice: `You are a DSA coding assistant.
-From the given pattern.md context, generate 3–5 concise code snippets 
-that directly demonstrate the core algorithms and patterns mentioned.
-Format the output as Markdown.
-For each snippet, add a heading (### Snippet Name) describing what it demonstrates.
-Do NOT add explanations, only headings + code blocks.`,
+        practice: `You are a DSA coding tutor.
+From the given pattern.md content, identify the **Common Variations** section (or equivalent).
+For each variation listed, generate a **C++ implementation** as a standalone function or small program.
 
-        flash: `You are a coding drill generator.
-From the pattern.md context, output multiple short code skeletons 
-that capture the essence of the pattern.
-Format the output as Markdown.
-Each should have a heading (### Drill 1, Drill 2, etc.) and a code block.
-Keep snippets minimal, no explanations.`,
+Rules:
+- Respond in **Markdown format**.
+- Start with a top-level heading using the pattern’s name.
+- For each variation, create a "## Heading" with the variation name.
+- Under each heading, include a short one-line description (max 1 sentence).
+- Then provide the **C++ code snippet** inside a fenced code block (\`\`\`cpp).
+- Do NOT add extra explanation, just the heading + snippet.
+- Cover all variations mentioned in the context.
+
+Focus: The response should be a compact "practice notebook" of code snippets.`,
+
+        flash: `You are a DSA coding interviewer.
+From the given pattern.md context, generate **minimal C++ skeletons** (no full solutions).
+Each snippet should be an outline: function signature + minimal structure.
+Format response in Markdown with headings and \`\`\`cpp code blocks.`,
 
         cross: `You are a DSA mentor.
-Using the pattern.md context, generate side-by-side code snippets 
-that compare this pattern with 1–2 related patterns (if mentioned).
-Format as Markdown.
-Use headings like (### BFS vs DFS, ### Recursive vs Iterative) and code blocks.
-No explanations, only code snippets.`,
+Compare this pattern against at least 2 other related patterns (from the context or your knowledge).
+Highlight differences, when to prefer each, and provide one **C++ example snippet** per comparison.
+Respond in Markdown.`,
 
         edge: `You are a problem setter.
-From the pattern.md context, generate tricky or less obvious code variants 
-of this pattern (for edge cases or uncommon inputs).
-Format as Markdown.
-Each should have a heading (### Edge Variant 1, etc.) followed by a code block.
-No commentary, just code.`,
+Using the given pattern.md context, generate **edge-case C++ practice snippets**.
+For each edge case (like empty input, k=1, all elements same, etc.), write a short description and a \`\`\`cpp code block showing how to handle it.
+Respond in Markdown.`,
       };
 
       // Tab toggles
@@ -443,6 +457,7 @@ public class Main {
 
         // Show loader + switch to AI tab
         aiOutput.innerHTML = "<em>⏳ Generating response...</em>";
+        hljs.highlightAll();
         docsTab.classList.remove("active");
         aiTab.classList.add("active");
         docsView.style.display = "none";
@@ -465,6 +480,7 @@ public class Main {
         const text =
           resp.candidates?.[0]?.content?.parts?.[0]?.text || "⚠️ No response.";
         aiOutput.innerHTML = marked.parse(text);
+        hljs.highlightAll();
       }
 
       // Theme toggle
