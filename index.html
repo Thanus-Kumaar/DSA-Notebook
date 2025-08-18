@@ -71,30 +71,45 @@
         overflow: hidden;
       }
       #controls {
-        padding: 10px;
+        padding: 10px 16px;
         border-bottom: 1px solid var(--border);
         display: flex;
-        gap: 10px;
+        justify-content: space-between;
         align-items: center;
         background: var(--card-bg);
+        gap: 12px;
       }
-      select,
-      button,
-      input {
-        padding: 6px 8px;
+      .control-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      #controls label {
+        font-weight: 500;
+        margin-right: 4px;
+        color: var(--fg);
+      }
+      #controls select,
+      #controls input {
+        padding: 6px 10px;
         border-radius: 6px;
         border: 1px solid var(--border);
         background: var(--bg);
         color: var(--fg);
+        font-size: 0.9em;
       }
-      button {
+      #controls button {
         cursor: pointer;
         background: var(--accent);
         color: #fff;
         border: none;
-        transition: background 0.3s;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 0.9em;
+        font-weight: 500;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
       }
-      button:hover {
+      #controls button:hover {
         background: #7a5ce8;
       }
       #themeToggle,
@@ -244,26 +259,32 @@
     </div>
     <div id="main">
       <div id="controls">
-        <button id="sidebarToggle">📂</button>
-        <label>
+        <div class="control-group">
+          <button id="sidebarToggle">📂</button>
+          <label>
+            Mode:
+            <select id="mode">
+              <option value="practice">Practice Mode</option>
+              <option value="cross">Cross-links Mode</option>
+              <option value="edge">Edge Case Mode</option>
+            </select>
+          </label>
           <span id="modeInfo">ⓘ</span>
-          Mode:
-        </label>
-        <select id="mode">
-          <option value="practice">Practice Mode</option>
-          <option value="cross">Cross-links Mode</option>
-          <option value="edge">Edge Case Mode</option>
-        </select>
-        <input type="password" id="apiKey" placeholder="Gemini API Key" />
-        <button onclick="generateAI()">✨ Generate</button>
-        <label>Lang:</label>
-        <select id="language" onchange="setLanguage(this.value)">
-          <option value="cpp">C++</option>
-          <option value="python">Python</option>
-          <option value="java">Java</option>
-        </select>
-        <button id="themeToggle">🌙 Theme</button>
+          <input type="password" id="apiKey" placeholder="Gemini API Key" />
+          <button onclick="generateAI()">✨ Generate</button>
+        </div>
+
+        <div class="control-group">
+          <label>Lang:</label>
+          <select id="language" onchange="setLanguage(this.value)">
+            <option value="cpp">C++</option>
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+          </select>
+          <button id="themeToggle">🌙 Theme</button>
+        </div>
       </div>
+
       <div id="content">
         <div id="docs">
           <div class="tabs">
@@ -287,7 +308,8 @@
             <div class="card">
               <h3>Pattern</h3>
               <div id="pattern">
-                Common patterns present in the selected topic will be shown here!
+                Common patterns present in the selected topic will be shown
+                here!
               </div>
             </div>
           </div>
@@ -505,13 +527,19 @@ public class Main {
       }
 
       // Theme toggle
-      document.getElementById("themeToggle").onclick = () => {
+      const themeToggle = document.getElementById("themeToggle");
+      themeToggle.addEventListener("click", () => {
         document.body.classList.toggle("dark");
         cm.setOption(
           "theme",
           document.body.classList.contains("dark") ? "dracula" : "default"
         );
-      };
+        if (document.body.classList.contains("dark")) {
+          themeToggle.textContent = "☀️ Light";
+        } else {
+          themeToggle.textContent = "🌙 Dark";
+        }
+      });
 
       // Sidebar toggle
       document.getElementById("sidebarToggle").onclick = () => {
