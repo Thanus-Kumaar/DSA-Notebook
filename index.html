@@ -170,6 +170,30 @@
         border-radius: 10px;
         white-space: pre-wrap;
       }
+      #modeInfo {
+        margin-left: 6px;
+        cursor: pointer;
+        font-size: 0.9em;
+        display: inline-block;
+        color: var(--accent);
+        position: relative;
+      }
+
+      #modeInfo:hover::after {
+        content: attr(data-info);
+        position: absolute;
+        top: 120%;
+        left: 0;
+        background: var(--card-bg);
+        color: var(--fg);
+        padding: 6px 10px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        white-space: pre-line;
+        width: 200px;
+        font-size: 0.85em;
+        z-index: 10;
+      }
     </style>
     <!-- Markdown renderer -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -195,7 +219,10 @@
     <div id="main">
       <div id="controls">
         <button id="sidebarToggle">📂</button>
-        <label>Mode:</label>
+        <label>
+          <span id="modeInfo">ⓘ</span>
+          Mode:
+        </label>
         <select id="mode">
           <option value="practice">Practice Mode</option>
           <option value="flash">Flash Practice Mode</option>
@@ -244,32 +271,34 @@
 
     <script>
       // hidden system prompts
-      // hidden system prompts
       const prompts = {
         practice: `You are a DSA coding assistant.
-        From the given pattern.md context, generate 3–5 concise code snippets 
-        that directly demonstrate the core algorithms and patterns mentioned.
-        Each snippet should be a self-contained function or main() usage.
-        Do NOT explain — just output clean, runnable code.
-        Keep them minimal, focusing only on the pattern (no extra boilerplate).`,
+From the given pattern.md context, generate 3–5 concise code snippets 
+that directly demonstrate the core algorithms and patterns mentioned.
+Format the output as Markdown.
+For each snippet, add a heading (### Snippet Name) describing what it demonstrates.
+Do NOT add explanations, only headings + code blocks.`,
 
         flash: `You are a coding drill generator.
-        From the pattern.md context, output multiple short code skeletons 
-        (functions, loops, recursions, etc.) that capture the essence of the pattern.
-        Omit all explanations — the goal is to practice typing.
-        Keep each snippet under ~15 lines.`,
+From the pattern.md context, output multiple short code skeletons 
+that capture the essence of the pattern.
+Format the output as Markdown.
+Each should have a heading (### Drill 1, Drill 2, etc.) and a code block.
+Keep snippets minimal, no explanations.`,
 
         cross: `You are a DSA mentor.
-        Using the pattern.md context, generate side-by-side code snippets that 
-        compare this pattern with 1–2 related patterns (if mentioned).
-        Highlight the subtle differences in approach by showing both versions 
-        of the code. Do not explain, just output the code snippets.`,
+Using the pattern.md context, generate side-by-side code snippets 
+that compare this pattern with 1–2 related patterns (if mentioned).
+Format as Markdown.
+Use headings like (### BFS vs DFS, ### Recursive vs Iterative) and code blocks.
+No explanations, only code snippets.`,
 
         edge: `You are a problem setter.
-        From the pattern.md context, generate tricky or less obvious code variants 
-        of this pattern (for edge cases or uncommon inputs).
-        Focus on subtle variations that are worth practicing.
-        Output ONLY code snippets (no commentary).`,
+From the pattern.md context, generate tricky or less obvious code variants 
+of this pattern (for edge cases or uncommon inputs).
+Format as Markdown.
+Each should have a heading (### Edge Variant 1, etc.) followed by a code block.
+No commentary, just code.`,
       };
 
       // Tab toggles
@@ -291,6 +320,24 @@
         docsView.style.display = "none";
         aiView.style.display = "block";
       };
+
+      const modeInfoMap = {
+        practice:
+          "Practice Mode:\nGenerates 3–5 full code snippets of this pattern.",
+        flash: "Flash Mode:\nQuick skeletons for rapid-fire drills.",
+        cross: "Cross-links Mode:\nCompares this pattern with related ones.",
+        edge: "Edge Case Mode:\nGenerates tricky/variant snippets.",
+      };
+
+      const modeSelect = document.getElementById("mode");
+      const modeInfo = document.getElementById("modeInfo");
+
+      // set initial info
+      modeInfo.setAttribute("data-info", modeInfoMap[modeSelect.value]);
+
+      modeSelect.addEventListener("change", () => {
+        modeInfo.setAttribute("data-info", modeInfoMap[modeSelect.value]);
+      });
 
       const folders = [
         "01-hashing",
