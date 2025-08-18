@@ -125,6 +125,11 @@
         display: flex;
         gap: 8px;
         margin-bottom: 10px;
+        position: sticky;
+        top: -10px;
+        background: var(--bg);
+        padding-bottom: 8px;
+        z-index: 5;
       }
       .tabs button {
         flex: 1;
@@ -180,6 +185,12 @@
         position: relative;
       }
 
+      #docsView {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
       #modeInfo:hover::after {
         content: attr(data-info);
         position: absolute;
@@ -194,6 +205,9 @@
         width: 200px;
         font-size: 0.85em;
         z-index: 10;
+      }
+      .hidden {
+        display: none;
       }
     </style>
     <!-- Markdown renderer -->
@@ -237,7 +251,6 @@
         </label>
         <select id="mode">
           <option value="practice">Practice Mode</option>
-          <option value="flash">Flash Practice Mode</option>
           <option value="cross">Cross-links Mode</option>
           <option value="edge">Edge Case Mode</option>
         </select>
@@ -258,13 +271,24 @@
             <button id="aiTab">🤖 AI Response</button>
           </div>
           <div id="docsView">
+            <div id="placeholder" class="card">
+              <h3>Welcome 👋</h3>
+              <p>
+                Please select a topic from the sidebar to view its
+                <b>summary</b> and <b>pattern</b>.
+              </p>
+            </div>
             <div class="card">
               <h3>Summary</h3>
-              <div id="summary"></div>
+              <div id="summary">
+                Summary of selected topic will be displayed here!
+              </div>
             </div>
             <div class="card">
               <h3>Pattern</h3>
-              <div id="pattern"></div>
+              <div id="pattern">
+                Common patterns present in the selected topic will be shown here!
+              </div>
             </div>
           </div>
           <div id="aiView" style="display: none">
@@ -298,11 +322,6 @@ Rules:
 - Cover all variations mentioned in the context.
 
 Focus: The response should be a compact "practice notebook" of code snippets.`,
-
-        flash: `You are a DSA coding interviewer.
-From the given pattern.md context, generate **minimal C++ skeletons** (no full solutions).
-Each snippet should be an outline: function signature + minimal structure.
-Format response in Markdown with headings and \`\`\`cpp code blocks.`,
 
         cross: `You are a DSA mentor.
 Compare this pattern against at least 2 other related patterns (from the context or your knowledge).
@@ -338,7 +357,6 @@ Respond in Markdown.`,
       const modeInfoMap = {
         practice:
           "Practice Mode:\nGenerates 3–5 full code snippets of this pattern.",
-        flash: "Flash Mode:\nQuick skeletons for rapid-fire drills.",
         cross: "Cross-links Mode:\nCompares this pattern with related ones.",
         edge: "Edge Case Mode:\nGenerates tricky/variant snippets.",
       };
@@ -374,8 +392,6 @@ Respond in Markdown.`,
         "18-tries",
         "19-dsu",
         "20-bitmasking",
-        "tag",
-        "template",
       ];
 
       const topicsEl = document.getElementById("topics");
@@ -389,12 +405,17 @@ Respond in Markdown.`,
       let currentFolder = null;
       async function loadDocs(folder) {
         currentFolder = folder;
+        document.getElementById("placeholder").classList.add("hidden");
+        document.getElementById("summary").classList.remove("hidden");
+        document.getElementById("pattern").classList.remove("hidden");
+
         const summary = await fetch(`${folder}/summary.md`)
           .then((r) => r.text())
           .catch(() => "# Missing summary.md");
         const pattern = await fetch(`${folder}/pattern.md`)
           .then((r) => r.text())
           .catch(() => "# Missing pattern.md");
+
         document.getElementById("summary").innerHTML = marked.parse(summary);
         document.getElementById("pattern").innerHTML = marked.parse(pattern);
       }
