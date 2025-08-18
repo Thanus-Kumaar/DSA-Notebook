@@ -337,29 +337,29 @@
     <script>
       // hidden system prompts
       const prompts = {
-        practice: `You are a DSA coding tutor.
+        practice: (lang) => `You are a DSA coding tutor.
 From the given pattern.md content, identify the **Common Variations** section (or equivalent).
-For each variation listed, generate a **C++ implementation** as a standalone function or small program.
+For each variation listed, generate a **${lang} implementation** as a standalone function or small program.
 
 Rules:
 - Respond in **Markdown format**.
 - Start with a top-level heading using the pattern’s name.
 - For each variation, create a "## Heading" with the variation name.
 - Under each heading, include a short one-line description (max 1 sentence).
-- Then provide the **C++ code snippet** inside a fenced code block (\`\`\`cpp).
+- Then provide the **${lang} code snippet** inside a fenced code block (\`\`\`${lang}).
 - Do NOT add extra explanation, just the heading + snippet.
 - Cover all variations mentioned in the context.
 
 Focus: The response should be a compact "practice notebook" of code snippets.`,
 
-        cross: `You are a DSA mentor.
+        cross: (lang) => `You are a DSA mentor.
 Compare this pattern against at least 2 other related patterns (from the context or your knowledge).
-Highlight differences, when to prefer each, and provide one **C++ example snippet** per comparison.
+Highlight differences, when to prefer each, and provide one **${lang} example snippet** per comparison.
 Respond in Markdown.`,
 
-        edge: `You are a problem setter.
-Using the given pattern.md context, generate **edge-case C++ practice snippets**.
-For each edge case (like empty input, k=1, all elements same, etc.), write a short description and a \`\`\`cpp code block showing how to handle it.
+        edge: (lang) => `You are a problem setter.
+Using the given pattern.md context, generate **edge-case ${lang} practice snippets**.
+For each edge case (like empty input, k=1, all elements same, etc.), write a short description and a \`\`\`${lang} code block showing how to handle it.
 Respond in Markdown.`,
       };
 
@@ -519,6 +519,8 @@ public class Main {
         if (!apiKey) return alert("Enter your Gemini API key.");
 
         const mode = document.getElementById("mode").value;
+        const lang = document.getElementById("language").value;
+        if (!lang || lang == "nil") return alert("Select a Language first");
         const summary = await fetch(`${currentFolder}/summary.md`)
           .then((r) => r.text())
           .catch(() => "");
@@ -526,7 +528,7 @@ public class Main {
           .then((r) => r.text())
           .catch(() => "");
         const context = summary + "\n\n" + pattern;
-        const systemPrompt = prompts[mode];
+        const systemPrompt = prompts[mode](lang);
         const userPrompt = `${systemPrompt}\n\nPattern context:\n${context}`;
 
         // Show loader + switch to AI tab
