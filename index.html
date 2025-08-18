@@ -6,11 +6,18 @@
     <title>🧠 DSA Pattern Notebook</title>
     <style>
       :root {
-        --bg: #f5f5f5;
-        --fg: #111;
-        --card-bg: #fff;
-        --border: #ddd;
-        --accent: #0056d6;
+        --bg: #f9f6f2; /* off-white with warmth */
+        --fg: #2b2b2b; /* dark brown-gray text */
+        --card-bg: #ffffff;
+        --border: #e9d5bc; /* sandy border */
+        --accent: #ab6f2a; /* warm amber accent */
+      }
+      body.dark {
+        --bg: #201824; /* muted purple-black */
+        --fg: #eae0e8; /* soft lavender-gray text */
+        --card-bg: #2b2130; /* dark plum card background */
+        --border: #3a2b3f; /* purple-gray border */
+        --accent: #c084fc; /* soft violet accent */
       }
       body {
         margin: 0;
@@ -21,13 +28,6 @@
         color: var(--fg);
         transition: background 0.3s, color 0.3s;
         overflow: hidden;
-      }
-      body.dark {
-        --bg: #1e1b29;
-        --fg: #eaeaea;
-        --card-bg: #2a2438;
-        --border: #3b2f4a;
-        --accent: #9d7aff;
       }
       #sidebar {
         width: 250px;
