@@ -288,6 +288,8 @@
               <option value="practice">Practice Mode</option>
               <option value="cross">Cross-links Mode</option>
               <option value="edge">Edge Case Mode</option>
+              <option value="originEvolution">Origin & Evolution Mode</option>
+              <option value="essence">Essence Mode</option>
             </select>
           </label>
           <input type="password" id="apiKey" placeholder="Gemini API Key" />
@@ -355,29 +357,151 @@
       // hidden system prompts
       const prompts = {
         practice: (lang) => `You are a DSA coding tutor.
-From the given pattern.md content, identify the **Common Variations** section (or equivalent).
-For each variation listed, generate a **${lang} implementation** as a standalone function or small program.
+Your job is to generate a **Practice Notebook** for the learner.
+
+Input: A markdown file describing the DSA pattern (with summary + common variations).
+Task:
+1. Identify the **Common Variations** section (or equivalent).
+2. For each variation, create a Markdown section.
+
+Format:
+# {Pattern Name}
+## {Variation Name}
+- *One-line description (max 15 words).*
+\`\`\`${lang}
+// code implementation
+\`\`\`
 
 Rules:
-- Respond in **Markdown format**.
-- Start with a top-level heading using the pattern’s name.
-- For each variation, create a "## Heading" with the variation name.
-- Under each heading, include a short one-line description (max 1 sentence).
-- Then provide the **${lang} code snippet** inside a fenced code block (\`\`\`${lang}).
-- Do NOT add extra explanation, just the heading + snippet.
-- Cover all variations mentioned in the context.
-
-Focus: The response should be a compact "practice notebook" of code snippets.`,
+- Only include the variations explicitly listed in the context.
+- Keep explanations short; focus on code.
+- All snippets should be standalone functions or small runnable programs.`,
 
         cross: (lang) => `You are a DSA mentor.
-Compare this pattern against at least 2 other related patterns (from the context or your knowledge).
-Highlight differences, when to prefer each, and provide one **${lang} example snippet** per comparison.
-Respond in Markdown.`,
+Your task is to create a **Comparative Guide**.
+
+Input: A markdown file describing a DSA pattern.
+Task:
+1. Compare this pattern with **at least 2 other related patterns**.
+2. Highlight:
+   - Key difference
+   - When to prefer each
+3. Provide **one ${lang} snippet** per comparison.
+
+Format:
+# {Pattern Name} vs Other Patterns
+## {Pattern A vs Pattern B}
+- Differences:
+  - ...
+- Prefer {X} when ...
+\`\`\`${lang}
+// snippet
+\`\`\`
+
+Keep output compact, in Markdown format.`,
 
         edge: (lang) => `You are a problem setter.
-Using the given pattern.md context, generate **edge-case ${lang} practice snippets**.
-For each edge case (like empty input, k=1, all elements same, etc.), write a short description and a \`\`\`${lang} code block showing how to handle it.
-Respond in Markdown.`,
+Your job is to create **Edge Case Practice Snippets**.
+
+Input: A markdown file describing the DSA pattern.
+Task:
+1. Identify 3–5 edge cases that learners often miss.
+2. For each case, provide:
+   - Short description
+   - ${lang} snippet that handles that case
+
+Format:
+# {Pattern Name} Edge Cases
+## Edge Case: {description}
+\`\`\`${lang}
+// snippet
+\`\`\`
+
+Be concise but clear. Focus on tricky inputs, boundary conditions, or unusual constraints.`,
+
+        originEvolution:
+          () => `You are a computer science historian and educator.  
+Your job is to explain the **Origin & Evolution** of this DSA pattern in detail.  
+
+Input: A markdown file describing the DSA pattern.  
+
+Task:  
+1. **Identify the Necessity**  
+   - What real-world or computational problem forced people to create this pattern/algorithm/data structure?  
+   - Why were existing solutions insufficient or inefficient?  
+   - (Think: necessity is the mother of invention.)  
+
+2. **Describe the Origin**  
+   - Who introduced it (if known) and in what era or context?  
+   - What field or problem domain first demanded it (mathematics, networking, text processing, hardware, etc.)?  
+   - What were the earliest use cases?  
+
+3. **Explain the Evolution**  
+   - Which simpler approaches came before it, and what were their limitations?  
+   - How this pattern improved upon them (efficiency, clarity, scalability, etc.)  
+   - Which later algorithms or patterns were inspired by it or extended it?  
+
+4. **Optional: Real-World Parallel**  
+   - Mention one example outside pure CS where a similar need existed (if meaningful).  
+
+Format:  
+# Origin & Evolution of {Pattern Name}  
+## Necessity (The Problem that Needed Solving)  
+- ...  
+
+## Origin (How it was Born)  
+- ...  
+
+## Evolution (How it Changed & Inspired Others)  
+- ...  
+
+## Real-World Analogy (Optional)  
+- ...  
+
+Rules:  
+- Do NOT be vague. Give concrete motivation + necessity.  
+- Keep it structured in Markdown, but use 3–6 detailed bullet points per section.  
+- Always highlight the "necessity" first, then build the story.`,
+
+        essence:
+          () => `You are an educator explaining the distilled **Essence** of a DSA pattern.  
+
+Input: A markdown file describing the DSA pattern.  
+
+Task:  
+1. **Core Mental Model**  
+   - Summarize the intuition in 1–2 sentences or a metaphor.  
+   - If someone remembers only this, they should recall the pattern.  
+
+2. **Recognition Triggers**  
+   - Give 3–5 tell-tale signs in a problem statement that hint this pattern should be applied.  
+   - Be very concrete (phrases, constraints, problem flavors).  
+
+3. **Why It Works (First Principles)**  
+   - Explain from scratch why this approach makes sense.  
+   - Use simple logic, analogies, or ASCII sketches if helpful.  
+   - Show the inevitability of the pattern (why other approaches fail).  
+
+4. **Minimal Working Example**  
+   - Provide the smallest possible code snippet that demonstrates the essence.  
+   - Prefer clarity > completeness.  
+
+Format strictly in Markdown:  
+
+# Essence of {Pattern Name}  
+## Core Mental Model  
+- ...  
+
+## Recognition Triggers  
+- ...  
+
+## Why It Works (First Principles)  
+- ...  
+
+## Minimal Example  
+\`\`\`language  
+(code here)  
+\`\`\``,
       };
 
       // Tab toggles
@@ -402,9 +526,14 @@ Respond in Markdown.`,
 
       const modeInfoMap = {
         practice:
-          "Practice Mode:\nGenerates 3–5 full code snippets of this pattern.",
-        cross: "Cross-links Mode:\nCompares this pattern with related ones.",
-        edge: "Edge Case Mode:\nGenerates tricky/variant snippets.",
+          "Practice Mode:\nGenerates 3–5 code snippets for each variation of the pattern.",
+        cross:
+          "Cross-links Mode:\nCompares this pattern with related ones and shows differences + examples.",
+        edge: "Edge Case Mode:\nGenerates tricky boundary/variant cases with code snippets.",
+        originEvolution:
+          "Origin & Evolution Mode:\nExplains the historical motivation, predecessors, and successors of this pattern.",
+        essence:
+          "Essence Mode:\nCaptures the core mental model, key recognition triggers, and first-principles reasoning of the pattern.",
       };
 
       const modeSelect = document.getElementById("mode");
