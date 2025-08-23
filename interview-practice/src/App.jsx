@@ -1,12 +1,29 @@
-import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import Practice from "./pages/Practice";
+import Interview from "./pages/Interview";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>Hello World</div>
-    </>
+    <Router>
+      <div className="min-h-screen flex flex-col">
+        {/* Navbar */}
+        <nav className="bg-gray-800 text-white px-6 py-3 flex gap-6">
+          <Link to="/">Home</Link>
+          <Link to="/practice">Practice</Link>
+          <Link to="/interview">Interview Mode</Link>
+        </nav>
+
+        {/* Routes */}
+        <div className="flex-1 p-6">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/practice" element={<Practice />} />
+            <Route path="/interview" element={<Interview />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
   );
 }
 
