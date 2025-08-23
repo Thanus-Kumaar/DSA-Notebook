@@ -38,14 +38,14 @@ export default function Sidebar({
     >
       {!collapsed && (
         <div
-          className={`flex flex-col gap-1 p-3 overflow-scroll bg-gray-100 dark:bg-gray-800 border-r border-gray-300 dark:border-gray-700 ${
+          className={`flex flex-col gap-1 px-2 overflow-scroll bg-gray-900 border-gray-700 hide-scrollbar ${
             collapsed ? "w-0 p-0 overflow-hidden" : "w-56"
           }`}
         >
-          <h2 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-100">
+          <h2 className="text-lg mt-2 font-semibold mb-2 text-gray-100">
             📚 Patterns
           </h2>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 hide-scrollbar">
             {folders.map((folder) => (
               <button
                 key={folder}
@@ -53,8 +53,8 @@ export default function Sidebar({
                 className={`text-left text-[14px] px-3 py-2 rounded-lg transition-colors duration-200 
               ${
                 selectedFolder === folder
-                  ? "bg-gray-900 text-white font-medium"
-                  : "hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200"
+                  ? "bg-gray-950 text-white font-medium"
+                  : "hover:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200"
               }`}
               >
                 {folder}

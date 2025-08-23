@@ -15,11 +15,11 @@ function App() {
         </nav>
 
         {/* Routes */}
-        <div className="flex-1 flex flex-col overflow-y-auto">
+        <div className="flex-1 flex flex-col overflow-y-auto bg-gray-900 text-gray-200 px-2 gap-6 shadow-xl shadow-white">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/practice" element={<Practice />} />
-            <Route path="/interview" element={<Interview />} />
+            <Route className="hover:text-white transition" path="/" element={<Home />} />
+            <Route className="hover:text-white transition" path="/practice" element={<Practice />} />
+            <Route className="hover:text-white transition" path="/interview" element={<Interview />} />
           </Routes>
         </div>
       </div>

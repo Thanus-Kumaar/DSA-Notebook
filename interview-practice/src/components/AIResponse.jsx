@@ -6,7 +6,7 @@ import remarkGfm from "remark-gfm";
 export default function AIResponse({ aiResponse }) {
   if (!aiResponse) {
     return (
-      <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
+      <div className="p-4 bg-gray-900 rounded shadow">
         <p>🤖 AI response will appear here.</p>
       </div>
     );

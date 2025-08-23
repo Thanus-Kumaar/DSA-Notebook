@@ -15,12 +15,12 @@ export default function ContentArea({
   return (
     <div className="flex-1 flex flex-col overflow-y-scroll gap-4 hide-scrollbar">
       {/* Tabs */}
-      <div className="flex gap-2 sticky top-0 z-10 bg-gray-800 p-2">
+      <div className="flex gap-2 sticky top-0 z-10 bg-gray-900 p-2">
         <button
           className={`flex-1 p-2 rounded ${
             activeTab === "docs"
-              ? "bg-indigo-500 text-white"
-              : "bg-gray-300 dark:bg-gray-700"
+              ? "bg-gray-950 text-white"
+              : "bg-gray-800 hover:bg-gray-700"
           }`}
           onClick={() => setActiveTab("docs")}
         >
@@ -29,8 +29,8 @@ export default function ContentArea({
         <button
           className={`flex-1 p-2 rounded ${
             activeTab === "ai"
-              ? "bg-indigo-500 text-white"
-              : "bg-gray-300 dark:bg-gray-700"
+              ? "bg-gray-950 text-white"
+              : "bg-gray-800 hover:bg-gray-700"
           }`}
           onClick={() => setActiveTab("ai")}
         >
