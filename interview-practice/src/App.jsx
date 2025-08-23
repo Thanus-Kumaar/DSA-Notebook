@@ -15,7 +15,7 @@ function App() {
         </nav>
 
         {/* Routes */}
-        <div className="flex-1 p-6">
+        <div className="flex-1 p-6 h-full">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/practice" element={<Practice />} />
