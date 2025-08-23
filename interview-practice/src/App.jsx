@@ -6,7 +6,7 @@ import Interview from "./pages/Interview";
 function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col">
+      <div className="max-h-screen flex flex-col">
         {/* Navbar */}
         <nav className="bg-gray-800 text-white px-6 py-3 flex gap-6">
           <Link to="/">Home</Link>
@@ -15,7 +15,7 @@ function App() {
         </nav>
 
         {/* Routes */}
-        <div className="flex-1 p-6 h-full">
+        <div className="flex-1 flex flex-col overflow-y-auto">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/practice" element={<Practice />} />

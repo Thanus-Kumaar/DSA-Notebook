@@ -11,20 +11,18 @@ export default function Practice() {
   const [theme, setTheme] = useState("light");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-  const toggleTheme = () =>
-    setTheme(theme === "light" ? "dark" : "light");
+  const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
 
-  const toggleSidebar = () =>
-    setSidebarCollapsed(!sidebarCollapsed);
+  const toggleSidebar = () => setSidebarCollapsed(!sidebarCollapsed);
 
   return (
-    <div className={`practice-page flex flex-1 h-full ${theme}`}>
+    <div className={`flex flex-row h-full overflow-y-scroll ${theme}`}>
       <Sidebar
         collapsed={sidebarCollapsed}
         selectedFolder={selectedFolder}
         setSelectedFolder={setSelectedFolder}
       />
-      <div className="main flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-h-0">
         <HeaderControls
           mode={mode}
           setMode={setMode}

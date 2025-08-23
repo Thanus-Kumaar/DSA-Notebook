@@ -13,12 +13,14 @@ export default function ContentArea({
   const [activeTab, setActiveTab] = useState("docs");
 
   return (
-    <div className="flex-1 flex flex-col gap-4 overflow-hidden">
+    <div className="flex-1 flex flex-col overflow-y-scroll gap-4">
       {/* Tabs */}
       <div className="flex gap-2 sticky top-0 z-10 bg-gray-50 dark:bg-gray-900 p-2 rounded">
         <button
           className={`flex-1 p-2 rounded ${
-            activeTab === "docs" ? "bg-indigo-500 text-white" : "bg-gray-300 dark:bg-gray-700"
+            activeTab === "docs"
+              ? "bg-indigo-500 text-white"
+              : "bg-gray-300 dark:bg-gray-700"
           }`}
           onClick={() => setActiveTab("docs")}
         >
@@ -26,7 +28,9 @@ export default function ContentArea({
         </button>
         <button
           className={`flex-1 p-2 rounded ${
-            activeTab === "ai" ? "bg-indigo-500 text-white" : "bg-gray-300 dark:bg-gray-700"
+            activeTab === "ai"
+              ? "bg-indigo-500 text-white"
+              : "bg-gray-300 dark:bg-gray-700"
           }`}
           onClick={() => setActiveTab("ai")}
         >
@@ -34,9 +38,9 @@ export default function ContentArea({
         </button>
       </div>
 
-      <div className="flex-1 flex gap-4 overflow-hidden">
-        {/* Left side: Docs or AI */}
-        <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 flex gap-4 min-h-0">
+        {/* Left side */}
+        <div className="flex-1 overflow-y-auto min-h-0">
           {activeTab === "docs" ? (
             <DocsView selectedFolder={selectedFolder} />
           ) : (
@@ -44,8 +48,8 @@ export default function ContentArea({
           )}
         </div>
 
-        {/* Right side: Editor */}
-        <div className="flex-1 h-full">
+        {/* Right side */}
+        <div className="flex-1 min-h-0">
           <EditorContainer language={language} />
         </div>
       </div>

@@ -38,12 +38,14 @@ public class Main {
 export default function EditorContainer({ language }) {
   const editorRef = useRef(null);
   const cmInstance = useRef(null);
-  const initialized = useRef(false);
 
   useEffect(() => {
-    if (initialized.current) return; // Already created
-    initialized.current = true;
+    // Clear the container first
+    if (editorRef.current) {
+      editorRef.current.innerHTML = '';
+    }
 
+    // Create the CodeMirror instance
     cmInstance.current = CodeMirror(editorRef.current, {
       value: boilerplates[language] || "",
       lineNumbers: true,
@@ -66,28 +68,18 @@ export default function EditorContainer({ language }) {
           : "text/plain",
     });
 
+    // Make CodeMirror take full height
+    cmInstance.current.getWrapperElement().style.height = '100%';
+    cmInstance.current.setSize('100%', '95%');
+
+    // Cleanup function
     return () => {
-      cmInstance.current.toTextArea?.(); // destroy editor
-      cmInstance.current = null;
-      initialized.current = false;
+      if (cmInstance.current) {
+        cmInstance.current.getWrapperElement().remove();
+        cmInstance.current = null;
+      }
     };
-  }, []);
+  }, [language]); // Include language as dependency
 
-  useEffect(() => {
-    if (cmInstance.current) {
-      cmInstance.current.setOption(
-        "mode",
-        language === "cpp"
-          ? "text/x-c++src"
-          : language === "python"
-          ? "python"
-          : language === "java"
-          ? "text/x-java"
-          : "text/plain"
-      );
-      cmInstance.current.setValue(boilerplates[language] || "");
-    }
-  }, [language]);
-
-  return <div ref={editorRef} className="h-full w-full border rounded" />;
+  return <div ref={editorRef} className="h-full w-full rounded" style={{ display: 'flex', flexDirection: 'column' }} />;
 }
