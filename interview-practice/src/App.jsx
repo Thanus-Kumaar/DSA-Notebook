@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Practice from "./pages/Practice";
 import Interview from "./pages/Interview";
+import WorkInProgress from "./pages/WorkInProgress";
 
 function App() {
   return (
@@ -17,9 +18,21 @@ function App() {
         {/* Routes */}
         <div className="flex-1 flex flex-col overflow-y-auto bg-gray-900 text-gray-200 px-2 gap-6 shadow-xl shadow-white">
           <Routes>
-            <Route className="hover:text-white transition" path="/" element={<Home />} />
-            <Route className="hover:text-white transition" path="/practice" element={<Practice />} />
-            <Route className="hover:text-white transition" path="/interview" element={<Interview />} />
+            <Route
+              className="hover:text-white transition"
+              path="/"
+              element={<Home />}
+            />
+            <Route
+              className="hover:text-white transition"
+              path="/practice"
+              element={<Practice />}
+            />
+            <Route
+              className="hover:text-white transition"
+              path="/interview"
+              element={<WorkInProgress />}
+            />
           </Routes>
         </div>
       </div>
