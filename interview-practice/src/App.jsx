@@ -8,7 +8,7 @@ function App() {
     <Router>
       <div className="max-h-screen flex flex-col">
         {/* Navbar */}
-        <nav className="bg-gray-800 text-white px-6 py-3 flex gap-6">
+        <nav className="bg-gray-900 text-white px-6 py-3 flex gap-6">
           <Link to="/">Home</Link>
           <Link to="/practice">Practice</Link>
           <Link to="/interview">Interview Mode</Link>

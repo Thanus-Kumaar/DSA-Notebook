@@ -1,53 +1,86 @@
-import React, { useState } from "react";
+import React from "react";
 
 export default function HeaderControls({
-  mode, setMode, language, setLanguage, toggleTheme, toggleSidebar
+  mode,
+  setMode,
+  language,
+  setLanguage,
+  toggleSidebar,
+  selectedFolder,
 }) {
-  const [apiKey, setApiKey] = useState("");
-  const modeInfoMap = {
-    practice: "Practice Mode:\nGenerates 3–5 code snippets for each variation of the pattern.",
-    cross: "Cross-links Mode:\nCompares this pattern with related ones and shows differences + examples.",
-    edge: "Edge Case Mode:\nGenerates tricky boundary/variant cases with code snippets.",
-    originEvolution: "Origin & Evolution Mode:\nExplains historical motivation, predecessors, and successors.",
-    essence: "Essence Mode:\nCaptures core mental model and reasoning."
-  };
+  const modeOptions = [
+    { value: "practice", label: "Practice Mode" },
+    { value: "cross", label: "Cross-links Mode" },
+    { value: "edge", label: "Edge Case Mode" },
+    { value: "originEvolution", label: "Origin & Evolution Mode" },
+    { value: "essence", label: "Essence Mode" },
+  ];
+
+  const languageOptions = [
+    { value: "cpp", label: "C++" },
+    { value: "python", label: "Python" },
+    { value: "java", label: "Java" },
+  ];
 
   return (
-    <div className="controls">
-      <div className="control-group">
-        <button onClick={toggleSidebar}>📂</button>
-        <span id="selectedFolder">Folder: </span>
+    <div className="flex items-center justify-between bg-gray-100 dark:bg-gray-800 p-3 shadow-sm flex-wrap gap-4">
+      {/* Sidebar / Folder Info */}
+      <div className="flex items-center gap-3">
+        <button
+          onClick={toggleSidebar}
+          className="px-3 py-1 bg-amber-400 text-white rounded hover:bg-amber-500 transition"
+        >
+          📂
+        </button>
+        <span className="text-gray-800 dark:text-gray-200 font-semibold">
+          {selectedFolder || "No folder selected"}
+        </span>
       </div>
 
-      <div className="control-group">
-        <label>
+      {/* Mode & API */}
+      <div className="flex items-center gap-3 flex-wrap">
+        <label className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
           Mode:
-          <span data-info={modeInfoMap[mode]} className="modeInfo">ⓘ</span>
-          <select value={mode} onChange={e => setMode(e.target.value)}>
-            <option value="practice">Practice Mode</option>
-            <option value="cross">Cross-links Mode</option>
-            <option value="edge">Edge Case Mode</option>
-            <option value="originEvolution">Origin & Evolution Mode</option>
-            <option value="essence">Essence Mode</option>
+          <select
+            value={mode}
+            onChange={(e) => setMode(e.target.value)}
+            className="px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+          >
+            {modeOptions.map((m) => (
+              <option key={m.value} value={m.value}>
+                {m.label}
+              </option>
+            ))}
           </select>
         </label>
+
         <input
           type="password"
           placeholder="Gemini API Key"
-          value={apiKey}
-          onChange={e => setApiKey(e.target.value)}
+          className="px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
         />
-        <button>✨ Generate</button>
+
+        <button className="px-3 py-1 bg-indigo-500 text-white rounded hover:bg-indigo-600 transition">
+          ✨ Generate
+        </button>
       </div>
 
-      <div className="control-group">
-        <label>Lang:</label>
-        <select value={language} onChange={e => setLanguage(e.target.value)}>
-          <option value="cpp">C++</option>
-          <option value="python">Python</option>
-          <option value="java">Java</option>
-        </select>
-        <button onClick={toggleTheme}>🌙 Theme</button>
+      {/* Language & Theme */}
+      <div className="flex items-center gap-3">
+        <label className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+          Lang:
+          <select
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+            className="px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+          >
+            {languageOptions.map((l) => (
+              <option key={l.value} value={l.value}>
+                {l.label}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
     </div>
   );
