@@ -1,14 +1,26 @@
 import React from "react";
-import { marked } from "marked";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 
 export default function AIResponse({ aiResponse }) {
+  if (!aiResponse) {
+    return (
+      <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
+        <p>🤖 AI response will appear here.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="p-4 bg-white dark:bg-gray-800 rounded shadow overflow-y-auto h-full">
-      {aiResponse ? (
-        <div dangerouslySetInnerHTML={{ __html: marked.parse(aiResponse) }} />
-      ) : (
-        <em>⏳ Generate a response using the controls above.</em>
-      )}
+    <div className="px-2 overflow-y-auto min-h-0 prose dark:prose-invert max-w-full">
+      <div className="markdown-body">
+        <ReactMarkdown
+          children={aiResponse}
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw]}
+        />
+      </div>
     </div>
   );
 }

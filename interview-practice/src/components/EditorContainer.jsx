@@ -57,7 +57,7 @@ export default function EditorContainer({ language }) {
       autoCloseBrackets: true,
       styleActiveLine: true,
       highlightSelectionMatches: { showToken: /\w/ },
-      theme: "solarized light",
+      theme: "dracula",
       mode:
         language === "cpp"
           ? "text/x-c++src"
@@ -70,7 +70,7 @@ export default function EditorContainer({ language }) {
 
     // Make CodeMirror take full height
     cmInstance.current.getWrapperElement().style.height = '100%';
-    cmInstance.current.setSize('100%', '95%');
+    cmInstance.current.setSize('98%', '95%');
 
     // Cleanup function
     return () => {

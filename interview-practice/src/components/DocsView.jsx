@@ -28,7 +28,7 @@ export default function DocsView({ selectedFolder }) {
     return <div className="p-4">Select a topic to view summary and pattern.</div>;
 
   return (
-    <div className="flex flex-col gap-4 overflow-auto h-full p-2">
+    <div className="flex flex-col gap-4 overflow-auto h-full px-2">
       <div className="bg-white dark:bg-gray-800 rounded shadow">
         <div className="markdown-body">
           <ReactMarkdown

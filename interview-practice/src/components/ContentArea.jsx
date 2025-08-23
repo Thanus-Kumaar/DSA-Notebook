@@ -13,9 +13,9 @@ export default function ContentArea({
   const [activeTab, setActiveTab] = useState("docs");
 
   return (
-    <div className="flex-1 flex flex-col overflow-y-scroll gap-4">
+    <div className="flex-1 flex flex-col overflow-y-scroll gap-4 hide-scrollbar">
       {/* Tabs */}
-      <div className="flex gap-2 sticky top-0 z-10 bg-gray-50 dark:bg-gray-800 p-2">
+      <div className="flex gap-2 sticky top-0 z-10 bg-gray-800 p-2">
         <button
           className={`flex-1 p-2 rounded ${
             activeTab === "docs"
@@ -38,7 +38,7 @@ export default function ContentArea({
         </button>
       </div>
 
-      <div className="flex-1 flex gap-4 min-h-0">
+      <div className="flex-1 flex min-h-0">
         {/* Left side */}
         <div className="flex-[60%] overflow-y-auto min-h-0">
           {activeTab === "docs" ? (

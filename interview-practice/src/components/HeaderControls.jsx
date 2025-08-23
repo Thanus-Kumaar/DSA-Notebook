@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 export default function HeaderControls({
@@ -8,8 +8,10 @@ export default function HeaderControls({
   setLanguage,
   toggleSidebar,
   selectedFolder,
-  sidebarCollapsed
+  sidebarCollapsed,
+  generateAI,
 }) {
+  const [apiKey, setApiKey] = useState();
   const modeOptions = [
     { value: "practice", label: "Practice Mode" },
     { value: "cross", label: "Cross-links Mode" },
@@ -63,10 +65,15 @@ export default function HeaderControls({
         <input
           type="password"
           placeholder="Gemini API Key"
+          value={apiKey}
+          onChange={(e) => setApiKey(e.target.value)}
           className="px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
         />
 
-        <button className="px-3 py-1 bg-indigo-500 text-white rounded hover:bg-indigo-600 transition">
+        <button
+          onClick={() => generateAI(apiKey)}
+          className="px-3 py-1 bg-indigo-500 text-white rounded hover:bg-indigo-600 transition"
+        >
           ✨ Generate
         </button>
       </div>
