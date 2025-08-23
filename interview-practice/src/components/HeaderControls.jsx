@@ -1,4 +1,5 @@
 import React from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 export default function HeaderControls({
   mode,
@@ -7,6 +8,7 @@ export default function HeaderControls({
   setLanguage,
   toggleSidebar,
   selectedFolder,
+  sidebarCollapsed
 }) {
   const modeOptions = [
     { value: "practice", label: "Practice Mode" },
@@ -28,9 +30,13 @@ export default function HeaderControls({
       <div className="flex items-center gap-3">
         <button
           onClick={toggleSidebar}
-          className="px-3 py-1 bg-amber-400 text-white rounded hover:bg-amber-500 transition"
+          className="p-1 rounded hover:bg-gray-300 dark:hover:bg-gray-700 transition"
         >
-          📂
+          {sidebarCollapsed ? (
+            <ChevronRightIcon className="h-5 w-5 text-gray-800 dark:text-gray-200" />
+          ) : (
+            <ChevronLeftIcon className="h-5 w-5 text-gray-800 dark:text-gray-200" />
+          )}
         </button>
         <span className="text-gray-800 dark:text-gray-200 font-semibold">
           {selectedFolder || "No folder selected"}

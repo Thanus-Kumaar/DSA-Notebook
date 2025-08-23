@@ -6,7 +6,7 @@ import Interview from "./pages/Interview";
 function App() {
   return (
     <Router>
-      <div className="max-h-screen flex flex-col">
+      <div className="h-screen flex flex-col">
         {/* Navbar */}
         <nav className="bg-gray-900 text-white px-6 py-3 flex gap-6">
           <Link to="/">Home</Link>

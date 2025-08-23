@@ -10,11 +10,12 @@ export default function Practice() {
   const [aiResponse, setAiResponse] = useState("");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-
   const toggleSidebar = () => setSidebarCollapsed(!sidebarCollapsed);
 
   return (
-    <div className={`flex flex-row h-full overflow-y-scroll hide-scrollbar dark`}>
+    <div
+      className={`flex flex-row h-full overflow-y-scroll hide-scrollbar dark`}
+    >
       <Sidebar
         collapsed={sidebarCollapsed}
         selectedFolder={selectedFolder}
@@ -28,6 +29,7 @@ export default function Practice() {
           setLanguage={setLanguage}
           toggleSidebar={toggleSidebar}
           selectedFolder={selectedFolder}
+          sidebarCollapsed={sidebarCollapsed}
         />
         <ContentArea
           selectedFolder={selectedFolder}

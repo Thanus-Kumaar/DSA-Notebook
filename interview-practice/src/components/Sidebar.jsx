@@ -39,7 +39,7 @@ export default function Sidebar({
       {!collapsed && (
         <div
           className={`flex flex-col gap-1 p-3 overflow-scroll bg-gray-100 dark:bg-gray-800 border-r border-gray-300 dark:border-gray-700 ${
-            collapsed ? "w-0 p-0 overflow-hidden" : "w-64"
+            collapsed ? "w-0 p-0 overflow-hidden" : "w-56"
           }`}
         >
           <h2 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-100">
@@ -50,10 +50,10 @@ export default function Sidebar({
               <button
                 key={folder}
                 onClick={() => setSelectedFolder(folder)}
-                className={`text-left px-3 py-2 rounded-lg transition-colors duration-200 
+                className={`text-left text-[14px] px-3 py-2 rounded-lg transition-colors duration-200 
               ${
                 selectedFolder === folder
-                  ? "bg-amber-400 text-white font-medium"
+                  ? "bg-gray-900 text-white font-medium"
                   : "hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200"
               }`}
               >
