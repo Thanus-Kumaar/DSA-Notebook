@@ -25,6 +25,11 @@ function App() {
             />
             <Route
               className="hover:text-white transition"
+              path="/DSA-Notebook"
+              element={<Home />}
+            />
+            <Route
+              className="hover:text-white transition"
               path="/practice"
               element={<Practice />}
             />
