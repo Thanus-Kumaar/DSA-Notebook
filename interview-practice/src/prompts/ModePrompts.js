@@ -5,13 +5,14 @@ Your job is to generate a **Practice Notebook** for the learner.
 Input: A markdown file describing the DSA pattern (with summary + common variations).
 Task:
 1. Identify the **Common Variations** section (or equivalent).
-2. For each variation, create a Markdown section.
+2. For each variation in the input markdown files, create a Markdown section (the code should have extensive comments wherever required explaining what the snippet is doing).
 
 Format:
 # {Pattern Name}
 ## {Variation Name}
-- *One-line description (max 15 words).*
+- *Description of the pattern (Why and where it is used) (be detailed, but dont exceed 150 words).*
 \`\`\`${lang}
+// give header comment on the pattern  
 // code implementation
 \`\`\`
 
