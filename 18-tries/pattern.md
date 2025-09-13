@@ -12,6 +12,7 @@ Apply the Trie pattern when:
 * **Compressed Trie (Radix Tree):** Nodes with only one child are merged, making it more space-efficient.
 * **Trie with Wildcards:** Nodes can have special wildcard characters (e.g., `.`) that match any character, used in pattern matching.
 * **Trie on Integers:** By representing integers in binary form, a Trie can be used to solve problems like finding the maximum XOR of a pair of numbers.
+* **Lexicographical Ordering:** Iterating through a Trie with a DFS-like traversal naturally yields words in lexicographical order.
 
 ## Key Implementation Insights
 
