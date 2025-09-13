@@ -1,13 +1,13 @@
 # Tries (Prefix Trees) - Summary
 
 ## 💡 Core Idea
-A Trie is a tree-like data structure used to store a dynamic set of strings. Its key feature is that each node represents a character, and the path from the root to a node represents a prefix. This structure enables highly efficient prefix-based search and insertion.
+A Trie is a tree-like data structure used to store a dynamic set of strings. Its key feature is that each node represents a character, and the path from the root to a node represents a prefix. This structure enables highly efficient prefix-based search and insertion, with time complexity dependent only on the length of the string/prefix.
 
 ## 🔁 Repeated Sub-Patterns
 * **Prefix Search:** Checking if any words in the collection start with a given prefix.
 * **Word Search:** Checking for the full existence of a word.
 * **Autocomplete & Auto-suggest:** Efficiently finding all words that share a common prefix.
-* **Spell Checker:** Quickly determining if a word is valid or suggesting alternatives.
+* **Lexicographical Ordering:** Traversal of a Trie naturally yields words in lexicographical order.
 * **Longest Common Prefix:** Finding the longest prefix shared by a set of words.
 * **IP Routing:** Storing IP addresses for fast lookups.
 
@@ -29,4 +29,5 @@ A Trie is a tree-like data structure used to store a dynamic set of strings. Its
     * Do the operations revolve around **prefixes** (searching, matching, auto-completing)?
     * Is there a need to store a large set of words for fast lookups?
     * Can the problem be modeled as a tree where each node represents a character?
+    * Is lexicographical ordering a requirement?
 * **Difficulty:** Medium (implementation and application are a good test of a data structure from scratch).
